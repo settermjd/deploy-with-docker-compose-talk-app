@@ -1,0 +1,54 @@
+// use these attributes to configure some attributes for asciidoctor-pdf
+:pdf-page-size: A4
+// see https://github.com/asciidoctor/asciidoctor-pdf/blob/master/docs/theming-guide.adoc
+:pdf-themesdir: ../pdfTheme
+// see https://asciidoctor.org/docs/user-manual/#builtin-attributes for builtin attributes
+// use Font Awesome for admonition icons
+:icons: font
+// the base folder for images
+:imagesdir: images
+// the type of document: article, book, manpage or inline
+// see https://asciidoctor.org/docs/user-manual/#document-types
+:doctype: article
+
+
+= Here is a header
+
+== Here is a second level header
+
+[source,php]
+.filename.php
+----
+$name = "Matthew Setter";
+
+if ($name == "Matthew Setter") {
+    print $name;
+}
+----
+
+=== Here is a third level header
+
+==== Here is a fourth level header
+
+
+Let's have a bit of a chat about something in the overview of this package which we want to talk about, such that we can create a trivial paragraph.
+
+Let's now add some *bolding* and _italicisation_.
+Now that we've done that, it's time to add a table, for more complex formatting.
+
+.A basic table
+|===
+|Header 1 |Header 2
+
+|Column 1, row 1
+|Column 2, row 1
+
+|Column 1, row 2
+|Column 2, row 2
+
+|Column 1, row 3
+|Column 2, row 3
+
+|Column 1, row 4
+|Column 2, row 4
+|===

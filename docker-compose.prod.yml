@@ -1,0 +1,38 @@
+volumes:
+  database_data:
+    driver: local
+
+services:
+  nginx:
+    image: registry.digitalocean.com/webdevwithmatt/webserver-alpine:latest
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - composer_dependencies:/var/www/html/vendor
+    depends_on:
+      - php
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/ping"]
+      interval: 60s
+      timeout: 3s
+      retries: 3
+
+  php:
+    image: registry.digitalocean.com/webdevwithmatt/php-runtime-alpine:latest
+    restart: always
+    expose:
+      - 9000
+    volumes:
+      - composer_dependencies:/var/www/html/vendor
+
+  database:
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
