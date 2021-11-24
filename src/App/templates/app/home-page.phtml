@@ -1,27 +1,24 @@
 <?php $this->headTitle('Home'); ?>
 
-<div class="row">
-    <div class="col-md-12">
-        <h1>Hawaii 5-0 Main Cast 2010 - 2020</h1>
-        <table class="table table-striped table-hover table-bordered table-sm">
-            <thead class="table-dark">
-            <tr>
-                <th>id</th>
-                <th>first name</th>
-                <th>last name</th>
-                <th>email address</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($this->stmt as $row): ?>
-                <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['first_name'] ?></td>
-                    <td><?= $row['last_name'] ?></td>
-                    <td><a href="mailto:<?= $row['email_address'] ?>"><?= $row['email_address'] ?></a></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+<div class="">
+    <h2 class="text-5xl text-gray-800 font-bold mb-6">Main Cast</h2>
+    <div class="grid grid-cols-6 gap-4 place-items-center">
+        <?php foreach ($this->stmt as $row): ?>
+        <div class="p-4">
+            <img class="rounded-full shadow-lg border-4 border-blue-200" src="/images/actors/<?= $row['actor_id'] ?>.jpg">
+            <div class="w-full text-center mt-2 text-gray-800"><?= $row['character_first_name'] ?> <?= $row['character_last_name'] ?></div>
+            <div class="w-full text-center text-gray-800"><?= $row['actor_first_name'] ?> <?= $row['actor_last_name'] ?></div>
+        </div>
+        <?php endforeach; ?>
     </div>
+
+    <h2 class="text-4xl text-gray-800 font-bold mb-4 mt-6">Synopsis</h2>
+    <p class="leading-relaxed mb-4">
+        Steve McGarrett (Alex O'Loughlin) comes to Hawaii to avenge his father's death, but when the Governor offers his own task force, he accepts. He picks up team members on the way, Danny Williams (Scott Caan), the head detective on his father's case, Chin Ho Kelly (Daniel Dae Kim), a former Honolulu Police Department Detective who was fired for accused corruption, and McGarrett's father's old patrol partner, Kono Kalakaua (Grace Park), a Cadet at the Police Academy who's one week from graduating, Lori Weston (Lauren German), entry to Five-O temporarily, Catharine Rollins (Michelle Borth), a girlfriend of Steve, and Captain Lou Grover (Chi McBride), a former Chicago Police Department Head of S.W.A.T.
+    </p>
+
+    <h2 class="text-4xl text-gray-800 font-bold mb-4 mt-6">Creators</h2>
+    <p class="leading-relaxed mb-4">
+        Peter M. Lenkov, Alex Kurtzman, and Leonard Freeman.
+    </p>
 </div>

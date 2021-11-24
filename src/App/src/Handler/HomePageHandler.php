@@ -45,7 +45,13 @@ class HomePageHandler implements RequestHandlerInterface
             'user',
             'password'
         );
-        $stmt = $dbh->query('SELECT * FROM records ORDER BY last_name');
+        $stmt = $dbh->query(
+            "select a.id as actor_id, c.first_name as character_first_name, c.last_name as character_last_name, c.title, a.first_name as actor_first_name, a.last_name as actor_last_name
+            from actors a
+            inner join character_to_actor cta1 on a.id = cta1.actor_id
+            inner join characters c on cta1.character_id = c.id
+            order by c.id"
+        );
 
         return new HtmlResponse(
             $this->template->render(
