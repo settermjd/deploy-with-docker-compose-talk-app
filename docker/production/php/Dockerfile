@@ -1,7 +1,6 @@
 FROM php:7.4-fpm-alpine3.13 as composer
 
-RUN apk add --update git \
-    && apk add --update nodejs npm
+RUN apk add --update git
 
 # setup composer -- taken from the composer docker installer code
 RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://raw.githubusercontent.com/composer/getcomposer.org/cb19f2aa3aeaa2006c0cd69a7ef011eb31463067/web/installer \
@@ -26,14 +25,13 @@ COPY --from=composer /usr/bin/composer /usr/bin/
 
 RUN /usr/bin/composer install \
     --no-dev --no-ansi --no-plugins --no-progress --no-scripts \
-    --classmap-authoritative --no-interaction --prefer-source \
-    --quiet \
+    --classmap-authoritative --no-interaction \
+    --quiet
 
-RUN apt-get update && \
-    docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql
 
 # Disable development mode
 # Should be added to a script where it also checks directory permissions.
 RUN rm -f config/autoload/development.local.php config/development.config.php
 
-EXPOSE 80 443 9000
+EXPOSE 80 9000
