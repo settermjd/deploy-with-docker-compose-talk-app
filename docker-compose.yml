@@ -4,13 +4,9 @@ volumes:
 
 services:
   nginx:
-    image: nginx:latest
-    restart: always
-    ports:
-      - 8080:80
-    volumes:
-      - ./docker/development/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./:/var/www/html
+    restart: unless-stopped
+    depends_on:
+      - php
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/ping"]
       interval: 60s
@@ -18,34 +14,14 @@ services:
       retries: 3
 
   php:
-    build: ./docker/development/php/
-    restart: always
-    volumes:
-      - .:/var/www/html
+    restart: unless-stopped
+    expose:
+      - 9000
 
   database:
-    image: mysql:latest
-    restart: always
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: docker/database/Dockerfile
     ports:
       - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: project
-      MYSQL_DATABASE: project_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    volumes:
-      - ./data/database:/var/lib/mysql/
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8090:80
-    depends_on:
-      - database
-    environment:
-      PMA_HOST: database
-      PMA_USER: user
-      PMA_PASSWORD: password
-      HIDE_PHP_VERSION:
-

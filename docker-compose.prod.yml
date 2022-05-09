@@ -1,19 +1,11 @@
-volumes:
-  database_data:
-    driver: local
-
 services:
   nginx:
     image: registry.digitalocean.com/webdevwithmatt/webserver-alpine:latest
     restart: always
     ports:
       - 80:80
-    volumes:
-      - composer_dependencies:/var/www/html/vendor
-    depends_on:
-      - php
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/ping"]
+      test: ["CMD", "curl", "-f", "http://localhost:80/api/ping"]
       interval: 60s
       timeout: 3s
       retries: 3
@@ -27,12 +19,9 @@ services:
       - composer_dependencies:/var/www/html/vendor
 
   database:
-    image: mysql:latest
     restart: always
-    ports:
-      - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE
-      - MYSQL_USER
-      - MYSQL_PASSWORD
+      - MARIADB_ROOT_PASSWORD
+      - MARIADB_DATABASE
+      - MARIADB_USER
+      - MARIADB_PASSWORD

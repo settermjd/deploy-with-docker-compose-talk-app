@@ -41,7 +41,7 @@ class HomePageHandler implements RequestHandlerInterface
         $data = [];
 
         $dbh = new \PDO(
-            'mysql:host=database;port=3306;dbname=project_db',
+            'mysql:host=database;port=3306;dbname=hawaii-five-0',
             'user',
             'password'
         );
