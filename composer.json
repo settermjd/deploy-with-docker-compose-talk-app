@@ -23,7 +23,10 @@
         "forum": "https://discourse.laminas.dev"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "laminas/laminas-component-installer": true
+        }
     },
     "extra": {
         "laminas": {
@@ -38,27 +41,26 @@
         }
     },
     "require": {
-        "php": "^7.1",
-        "laminas/laminas-component-installer": "^2.1.2",
-        "laminas/laminas-config-aggregator": "^1.2",
-        "laminas/laminas-diactoros": "^2.3.0",
-        "laminas/laminas-stdlib": "^3.2.1",
-        "laminas/laminas-zendframework-bridge": "^1.0",
-        "mezzio/mezzio": "^3.2.1",
-        "mezzio/mezzio-helpers": "^5.3",
-        "laminas/laminas-servicemanager": "^3.4",
-        "mezzio/mezzio-fastroute": "^3.0.3",
-        "mezzio/mezzio-laminasviewrenderer": "^2.2",
+        "php": "^8.0",
+        "laminas/laminas-component-installer": "^3.2.0",
+        "laminas/laminas-config-aggregator": "^1.13.0",
+        "laminas/laminas-diactoros": "^3.0.0",
+        "laminas/laminas-stdlib": "^3.17.0",
+        "laminas/laminas-zendframework-bridge": "^1.7.0",
+        "mezzio/mezzio": "^3.17.0",
+        "mezzio/mezzio-helpers": "^5.15.0",
+        "laminas/laminas-servicemanager": "^3.21.0",
+        "mezzio/mezzio-fastroute": "^3.10.0",
+        "mezzio/mezzio-laminasviewrenderer": "^2.14.0",
       "ext-pdo": "*"
     },
     "require-dev": {
-        "laminas/laminas-development-mode": "^3.2",
-        "mezzio/mezzio-tooling": "^1.3",
-        "phpspec/prophecy": "^1.10.3",
-        "phpunit/phpunit": "^7.5.20 || ^8.5.2 || ^9.0.1",
-        "roave/security-advisories": "dev-master",
-        "squizlabs/php_codesniffer": "^2.9.2",
-        "filp/whoops": "^2.7.1"
+        "laminas/laminas-development-mode": "^3.10.0",
+        "mezzio/mezzio-tooling": "^2.8.0",
+        "phpunit/phpunit": "^10.1.0",
+        "roave/security-advisories": "dev-latest",
+        "squizlabs/php_codesniffer": "^3.7.2",
+        "filp/whoops": "^2.15.2"
     },
     "autoload": {
         "psr-4": {
