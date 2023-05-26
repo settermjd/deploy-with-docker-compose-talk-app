@@ -5,54 +5,36 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use Laminas\Diactoros\Response\HtmlResponse;
-use Laminas\Diactoros\Response\JsonResponse;
-use Mezzio\LaminasView\LaminasViewRenderer;
-use Mezzio\Plates\PlatesRenderer;
-use Mezzio\Router;
 use Mezzio\Template\TemplateRendererInterface;
-use Mezzio\Twig\TwigRenderer;
+use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 class HomePageHandler implements RequestHandlerInterface
 {
-    /** @var string */
-    private $containerName;
+    private TemplateRendererInterface $template;
+    private PDO $dbh;
 
-    /** @var Router\RouterInterface */
-    private $router;
-
-    /** @var null|TemplateRendererInterface */
-    private $template;
-
-    public function __construct(
-        string $containerName,
-        Router\RouterInterface $router,
-        ?TemplateRendererInterface $template = null
-    ) {
-        $this->containerName = $containerName;
-        $this->router        = $router;
-        $this->template      = $template;
+    public function __construct(TemplateRendererInterface $template, PDO $dbh)
+    {
+        $this->template = $template;
+        $this->dbh      = $dbh;
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $data = [];
+        $sqlQuery = <<<EOF
+SELECT a.id AS actor_id, c.first_name AS character_first_name,
+       c.last_name AS character_last_name, c.title, a.first_name AS actor_first_name,
+       a.last_name AS actor_last_name
+FROM actors a
+INNER JOIN character_to_actor cta1 ON a.id = cta1.actor_id
+INNER JOIN characters c ON cta1.character_id = c.id
+ORDER BY c.id
+EOF;
 
-        $dbh = new \PDO(
-            'mysql:host=database;port=3306;dbname=hawaii-five-0',
-            'user',
-            'password'
-        );
-        $stmt = $dbh->query(
-            "select a.id as actor_id, c.first_name as character_first_name, c.last_name as character_last_name, c.title, a.first_name as actor_first_name, a.last_name as actor_last_name
-            from actors a
-            inner join character_to_actor cta1 on a.id = cta1.actor_id
-            inner join characters c on cta1.character_id = c.id
-            order by c.id"
-        );
-
+        $stmt = $this->dbh->query($sqlQuery);
         return new HtmlResponse(
             $this->template->render(
                 'app::home-page',

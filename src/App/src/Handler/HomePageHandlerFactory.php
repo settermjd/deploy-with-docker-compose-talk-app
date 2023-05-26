@@ -15,11 +15,15 @@ class HomePageHandlerFactory
 {
     public function __invoke(ContainerInterface $container) : RequestHandlerInterface
     {
-        $router   = $container->get(RouterInterface::class);
+        $config   = $container->get('config');
         $template = $container->has(TemplateRendererInterface::class)
             ? $container->get(TemplateRendererInterface::class)
             : null;
 
-        return new HomePageHandler(get_class($container), $router, $template);
+        $dbh = new \PDO(
+            $config['database']['dsn'],
+        );
+
+        return new HomePageHandler($template, $dbh);
     }
 }
