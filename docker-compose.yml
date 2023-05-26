@@ -1,27 +1,9 @@
-volumes:
-  database_data:
-    driver: local
-
 services:
-  nginx:
-    restart: unless-stopped
-    depends_on:
-      - php
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/ping"]
-      interval: 60s
-      timeout: 3s
-      retries: 3
-
-  php:
-    restart: unless-stopped
-    expose:
-      - 9000
-
-  database:
-    restart: unless-stopped
+  webserver:
     build:
       context: ./
-      dockerfile: docker/database/Dockerfile
+      dockerfile: docker/apache/Dockerfile
     ports:
-      - 3306:3306
+      - 80:80
+    volumes:
+      - ./:/var/www/html
