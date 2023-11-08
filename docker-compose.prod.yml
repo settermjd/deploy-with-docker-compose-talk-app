@@ -1,25 +1,16 @@
+version: "3.8"
+
 services:
   nginx:
-    image: registry.digitalocean.com/webdevwithmatt/webserver-alpine:latest
-    restart: always
+    image: settermjd/demo-app-nginx:1.0.0
     ports:
-      - 80:80
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80/api/ping"]
-      interval: 60s
-      timeout: 3s
-      retries: 3
+      - "80:80"
 
   php:
-    image: registry.digitalocean.com/webdevwithmatt/php-runtime-alpine:latest
-    restart: always
-    expose:
-      - 9000
-    volumes:
-      - composer_dependencies:/var/www/html/vendor
+    image: settermjd/demo-app-php:1.0.0
 
   database:
-    restart: always
+    image: settermjd/demo-app-database:1.0.0
     environment:
       - MARIADB_ROOT_PASSWORD
       - MARIADB_DATABASE

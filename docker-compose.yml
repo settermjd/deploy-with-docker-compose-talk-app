@@ -1,27 +1,10 @@
+version: "3.8"
+
+services:
+  database:
+    volumes:
+      - database_data:/var/lib/mysql
+
 volumes:
   database_data:
     driver: local
-
-services:
-  nginx:
-    restart: unless-stopped
-    depends_on:
-      - php
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/ping"]
-      interval: 60s
-      timeout: 3s
-      retries: 3
-
-  php:
-    restart: unless-stopped
-    expose:
-      - 9000
-
-  database:
-    restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: docker/database/Dockerfile
-    ports:
-      - 3306:3306

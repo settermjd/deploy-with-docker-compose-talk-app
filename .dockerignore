@@ -1,0 +1,7 @@
+# Ignore Mezzio's development configuration files
+config/**/*.local.php
+config/**/*.dist
+config/development.config.php
+
+# Ignore macOS's cache file
+.DS_Store
