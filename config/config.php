@@ -13,6 +13,9 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    class_exists(\Mezzio\Tooling\ConfigProvider::class)
+        ? \Mezzio\Tooling\ConfigProvider::class
+        : function() { return[]; },
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     \Mezzio\LaminasView\ConfigProvider::class,
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
