@@ -2,3 +2,7 @@
 /coveralls-upload.json
 /phpunit.xml
 /vendor/
+node_modules
+.idea
+.phpunit.result.cache
+docker-compose.override.yml
